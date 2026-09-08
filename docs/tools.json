@@ -15,7 +15,8 @@
     "codex",
     "claude code",
     "qwen",
-    "ollama"
+    "ollama",
+    "claude"
   ],
   "libraries_or_modules": [
     "pandas",
