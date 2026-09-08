@@ -1,0 +1,37 @@
+{
+  "coding_languages": [
+    "powershell",
+    "sql",
+    "python"
+  ],
+  "applications": [
+    "docker",
+    "postgresql",
+    "mssql",
+    "power bi",
+    "ssms",
+    "vscode",
+    "opencode",
+    "codex",
+    "claude code",
+    "qwen",
+    "ollama"
+  ],
+  "libraries_or_modules": [
+    "pandas",
+    "uv",
+    "pip",
+    "seaborn",
+    "os",
+    "sqlserver",
+    "pyodbc"
+  ],
+  "miscellaneous": [
+    "projects",
+    "agents",
+    "ai",
+    "subagents",
+    "llm",
+    "notebooklm"
+  ]
+}
