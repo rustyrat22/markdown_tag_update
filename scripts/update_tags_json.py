@@ -7,6 +7,11 @@ import sys
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
+
+from lib.tools import section_has_sub_sections
+
 TOOLS_JSON = os.path.join(PROJECT_ROOT, "docs", "tools.json")
 DEFAULT_CSV = os.path.join(PROJECT_ROOT, "docs", "tags.csv")
 LOG_FILE = os.path.join(PROJECT_ROOT, "docs", "update_tags_json.log")
@@ -58,6 +63,9 @@ def update_tools(records: list, tools_json: str = TOOLS_JSON) -> int:
             continue
         section = section.strip()
         log.debug(f"Processing record: tag='{tag}' section='{section}'")
+        if section in data and section_has_sub_sections(data[section]):
+            log.warning(f"Section '{section}' has sub-sections; skipping tag '{tag}'. Use scripts/update_sections.py to add tags to a specific sub-section.")
+            continue
         if section not in data:
             log.debug(f"Creating new section '{section}'")
             data[section] = []

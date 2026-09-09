@@ -8,6 +8,11 @@ import sys
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
+
+from lib.tools import flatten_section_tags
+
 TOOLS_JSON = os.path.join(PROJECT_ROOT, "docs", "tools.json")
 DEFAULT_OUTPUT = os.path.join(PROJECT_ROOT, "docs", "tags.csv")
 LOG_FILE = os.path.join(PROJECT_ROOT, "docs", "extract_tags.log")
@@ -35,7 +40,8 @@ def load_section_map(tools_json: str = TOOLS_JSON) -> dict:
     with open(tools_json, "r", encoding="utf-8") as f:
         data = json.load(f)
     section_map = {}
-    for section, tags in data.items():
+    for section, value in data.items():
+        tags = flatten_section_tags(value)
         for tag in tags:
             section_map[tag] = section
         log.debug(f"Section '{section}' mapped {len(tags)} tags")
@@ -47,9 +53,9 @@ def load_section_hints(tools_json: str = TOOLS_JSON) -> dict:
     with open(tools_json, "r", encoding="utf-8") as f:
         data = json.load(f)
     hints = {}
-    for section, tags in data.items():
+    for section, value in data.items():
         hint_list = []
-        for tag in tags:
+        for tag in flatten_section_tags(value):
             hint_list.append(tag)
             hint_list.extend(tag.split(" "))
         hints[section] = hint_list

@@ -7,6 +7,11 @@ import sys
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
+
+from lib.tools import flatten_section_tags
+
 TOOLS_JSON = os.path.join(PROJECT_ROOT, "docs", "tools.json")
 LOG_FILE = os.path.join(PROJECT_ROOT, "docs", "apply_tags.log")
 PROJECT_ROOT_MD = PROJECT_ROOT
@@ -71,6 +76,7 @@ def collect_tags(content: str, tools: dict) -> list:
     headings_text = find_headings(content)
     matched = set()
     for section, tags in tools.items():
+        tags = flatten_section_tags(tags)
         search_text = content if section == CODING_LANGUAGES_SECTION else headings_text
         for tag in tags:
             if tag_matches(tag, search_text):

@@ -9,9 +9,12 @@ markdown_tag_update/
 ├── scripts/
 │   ├── apply_tags.py        # Applies tags to markdown files
 │   ├── extract_tags.py      # Extracts tags from markdown files into CSV
-│   └── update_tags_json.py  # Updates tools.json from a reviewed CSV
+│   ├── update_tags_json.py  # Updates tools.json from a reviewed CSV
+│   └── update_sections.py   # Adds sections/sub-sections/tags and rebuilds tools.json
 ├── functions/
 │   └── tag_manager.py       # Utility to add a tag to tools.json
+├── lib/
+│   └── tools.py             # Shared helpers for handling tools.json sections
 ├── docs/
 │   ├── tools.json           # Central tag registry
 │   └── tags.csv             # Exported tags CSV
@@ -112,6 +115,66 @@ python scripts/update_tags_json.py
 # Use a specific CSV and tools.json
 python scripts/update_tags_json.py --csv-path "C:\reviewed\tags.csv" --tools-json "C:\config\my_tags.json"
 ```
+
+> Note: if a section already contains sub-sections, tags from the CSV are skipped for that section with a warning. Use `update_sections.py` to add tags to a specific sub-section instead.
+
+---
+
+### `update_sections.py`
+
+Adds new sections, sub-sections, and tags directly to `docs/tools.json`, and can rebuild the file to normalize it (deducing duplicate tags and preserving sub-section structure). Sections can be a flat list of tags or a dict of sub-sections, e.g.:
+
+```json
+{
+  "applications": {
+    "_default": ["docker", "postgresql"],
+    "database_servers": ["mysql"]
+  },
+  "coding_languages": ["powershell", "sql", "python"]
+}
+```
+
+**Parameters:**
+
+| Parameter          | Default                    | Description                                     |
+|--------------------|----------------------------|-------------------------------------------------|
+| `--add-section`    | —                          | Add a new top-level section                     |
+| `--add-sub-section` | —                         | Add a sub-section to an existing section (takes `SECTION SUB_SECTION`) |
+| `--add-tag`        | —                          | Add a tag to a section (takes `SECTION TAG`, optional `--sub-section`) |
+| `--sub-section`    | —                          | Sub-section to receive the tag (used with `--add-tag`) |
+| `--rebuild`        | `False`                    | Rebuild/normalize `tools.json` (dedupe tags, keep sub-section structure) |
+| `--tools-json`     | `docs/tools.json`          | Path to the tag registry JSON file              |
+| `--log-file`       | `docs/update_sections.log` | Path to write the log file                      |
+
+**Examples:**
+
+```bash
+# Add a new top-level section
+python scripts/update_sections.py --add-section cloud_platforms
+
+# Add a sub-section (existing tags move under "_default")
+python scripts/update_sections.py --add-sub-section applications database_servers
+
+# Add a tag to an existing section
+python scripts/update_sections.py --add-tag coding_languages rust
+
+# Add a tag to a specific sub-section
+python scripts/update_sections.py --add-tag applications mysql --sub-section database_servers
+
+# Rebuild/normalize the file
+python scripts/update_sections.py --rebuild
+
+# Combine operations in one run
+python scripts/update_sections.py --add-section cloud_platforms --add-tag cloud_platforms aws --rebuild
+```
+
+**Behavior:**
+
+- `--add-section` creates an empty section if it does not exist.
+- `--add-sub-section` converts a flat (list) section into a dict, placing existing tags under `_default`.
+- `--add-tag` with `--sub-section` auto-creates the sub-section and the sub-section structure if needed.
+- `--add-tag` without `--sub-section` requires the section to be a flat list.
+- `--rebuild` rewrites the file with normalized formatting, removes duplicate tags, and keeps the sub-section hierarchy.
 
 ---
 
