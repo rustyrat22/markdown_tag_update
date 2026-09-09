@@ -1,0 +1,27 @@
+[project]
+name = "markdown-tag-update"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Phil Hampton", email = "hampton.jpjr@gmail.com" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "markdown>=3.10.3",
+    "python-frontmatter>=1.3.0",
+    "pyyaml>=6.0.3",
+]
+
+[project.scripts]
+markdown-tag-update = "markdown_tag_update:main"
+
+[build-system]
+requires = ["uv_build>=0.12.3,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "ruff>=0.16.6",
+]
