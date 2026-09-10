@@ -1,0 +1,6 @@
+pandas
+uv
+pip
+seaborn
+os
+pyodbc

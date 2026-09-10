@@ -1,0 +1,12 @@
+docker
+postgresql
+mssql
+power bi
+ssms
+vscode
+opencode
+codex
+claude code
+qwen
+ollama
+claude

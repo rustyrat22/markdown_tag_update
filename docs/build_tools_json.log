@@ -1,0 +1,23 @@
+2026-09-10 13:50:01 INFO ==== build_tools_json run started ====
+2026-09-10 13:50:01 INFO Docs directory: C:\repos\markdown_tag_update\docs
+2026-09-10 13:50:01 INFO Tools file: C:\repos\markdown_tag_update\docs\tools.json
+2026-09-10 13:50:01 DEBUG Reading lines from: C:\repos\markdown_tag_update\docs\coding_languages.txt
+2026-09-10 13:50:01 DEBUG Read 3 items from C:\repos\markdown_tag_update\docs\coding_languages.txt
+2026-09-10 13:50:01 DEBUG Section 'coding_languages' has 3 items
+2026-09-10 13:50:01 DEBUG Reading lines from: C:\repos\markdown_tag_update\docs\applications.txt
+2026-09-10 13:50:01 DEBUG Read 12 items from C:\repos\markdown_tag_update\docs\applications.txt
+2026-09-10 13:50:01 DEBUG Section 'applications' has 12 items
+2026-09-10 13:50:01 DEBUG Reading lines from: C:\repos\markdown_tag_update\docs\libraries.txt
+2026-09-10 13:50:01 DEBUG Read 6 items from C:\repos\markdown_tag_update\docs\libraries.txt
+2026-09-10 13:50:01 DEBUG Reading lines from: C:\repos\markdown_tag_update\docs\modules.txt
+2026-09-10 13:50:01 DEBUG Read 1 items from C:\repos\markdown_tag_update\docs\modules.txt
+2026-09-10 13:50:01 DEBUG Section 'add_ons' has 7 items
+2026-09-10 13:50:01 DEBUG Reading lines from: C:\repos\markdown_tag_update\docs\miscellaneous.txt
+2026-09-10 13:50:01 DEBUG Read 6 items from C:\repos\markdown_tag_update\docs\miscellaneous.txt
+2026-09-10 13:50:01 DEBUG Section 'miscellaneous' has 6 items
+2026-09-10 13:50:01 INFO Section 'coding_languages' has 3 tags
+2026-09-10 13:50:01 INFO Section 'applications' has 12 tags
+2026-09-10 13:50:01 INFO Section 'add_ons' has 7 tags
+2026-09-10 13:50:01 INFO Section 'miscellaneous' has 6 tags
+2026-09-10 13:50:01 INFO Wrote 4 sections to C:\repos\markdown_tag_update\docs\tools.json.
+2026-09-10 13:50:01 INFO ==== build_tools_json run finished ====

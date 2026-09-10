@@ -8,13 +8,19 @@ A Python project for automatically scanning, extracting, and applying `#tags` to
 markdown_tag_update/
 ├── scripts/
 │   ├── apply_tags.py        # Applies tags to markdown files
+│   ├── build_tools_json.py  # Builds tools.json from section text files
 │   ├── extract_tags.py      # Extracts tags from markdown files into CSV
 │   └── update_tags_json.py  # Updates tools.json from a reviewed CSV
 ├── functions/
 │   └── tag_manager.py       # Utility to add a tag to tools.json
 ├── docs/
 │   ├── tools.json           # Central tag registry
-│   └── tags.csv             # Exported tags CSV
+│   ├── tags.csv             # Exported tags CSV
+│   ├── coding_languages.txt # Source for the coding_languages section
+│   ├── applications.txt     # Source for the applications section
+│   ├── libraries.txt        # Source for libraries (merged into add_ons)
+│   ├── modules.txt          # Source for modules (merged into add_ons)
+│   └── miscellaneous.txt    # Source for the miscellaneous section
 ├── tests/
 │   ├── test_tag_manager.py  # Tests for tag_manager
 │   ├── test_tools_json.py   # Tests for tools.json structure
@@ -115,6 +121,40 @@ python scripts/update_tags_json.py --csv-path "C:\reviewed\tags.csv" --tools-jso
 
 ---
 
+### `build_tools_json.py`
+
+Builds `docs/tools.json` from the section text files in `docs/`. Each text file maps to a section; `libraries.txt` and `modules.txt` are merged together under the `add_ons` section.
+
+**Section mapping:**
+
+| Text file(s)         | tools.json section       |
+|----------------------|--------------------------|
+| `coding_languages.txt` | `coding_languages`      |
+| `applications.txt`     | `applications`          |
+| `libraries.txt`        | `add_ons` (merged)      |
+| `modules.txt`          | `add_ons` (merged)      |
+| `miscellaneous.txt`    | `miscellaneous`         |
+
+**Parameters:**
+
+| Parameter       | Default                | Description                          |
+|-----------------|------------------------|--------------------------------------|
+| `--docs-dir`    | `docs/`                | Path to the docs directory           |
+| `--tools-json`  | `docs/tools.json`      | Path to the tag registry JSON file   |
+| `--log-file`    | `docs/build_tools_json.log` | Path to write the log file      |
+
+**Examples:**
+
+```bash
+# Build tools.json using defaults
+python scripts/build_tools_json.py
+
+# Use a specific docs directory and tools.json
+python scripts/build_tools_json.py --docs-dir "C:\config\docs" --tools-json "C:\config\my_tags.json"
+```
+
+---
+
 ### `functions/tag_manager.py`
 
 A utility module providing the `ensure_tag()` function for programmatic tag management.
@@ -177,7 +217,7 @@ Tests for the structure and integrity of `docs/tools.json`.
 
 | Test                                  | Description                                      |
 |---------------------------------------|--------------------------------------------------|
-| `test_json_has_expected_sections`     | Verifies `tools.json` contains the expected sections: `coding_languages`, `applications`, `libraries_or_modules`, `miscellaneous` |
+| `test_json_has_expected_sections`     | Verifies `tools.json` contains the expected sections: `coding_languages`, `applications`, `add_ons`, `miscellaneous` |
 | `test_no_duplicates_in_sections`      | Verifies no duplicate tags exist within any section |
 
 ### `test_ensure_folder.py`

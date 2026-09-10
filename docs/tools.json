@@ -18,14 +18,14 @@
     "ollama",
     "claude"
   ],
-  "libraries_or_modules": [
+  "add_ons": [
     "pandas",
     "uv",
     "pip",
     "seaborn",
     "os",
-    "sqlserver",
-    "pyodbc"
+    "pyodbc",
+    "sqlserver"
   ],
   "miscellaneous": [
     "projects",
